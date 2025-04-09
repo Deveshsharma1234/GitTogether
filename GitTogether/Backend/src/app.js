@@ -17,10 +17,17 @@ app.post("/signup",async(req,res)=>{
 //     email: email,
 //     password: password,
 //     })
-const user = new User(req.body);
+try{
+    const user = new User(req.body);
 
     await user.save();
     res.send(user);
+
+}catch(err){
+    res.status(400).send(err);
+
+}
+
 
 
 })
@@ -36,16 +43,26 @@ app.get("/getUserWithEmail",async(req,res)=>{
 
 app.patch("/user/:id",async(req,res)=>{
     const id = req.params.id;
-    const {firstName,lastName,age,email} = req.body;
-    
-   const userToUpdate  = await User. findById(`${id}`);
-   userToUpdate.firstName = firstName;
-   userToUpdate.lastName = lastName;
-   userToUpdate.age = age;
-   userToUpdate.email = email;
-   await userToUpdate.save();
-   res.send(userToUpdate)
-})
+    const {firstName,lastName,age,email,gender,skills} = req.body;
+    try
+    {
+        const userToUpdate  = await User. findById(`${id}`);
+        userToUpdate.firstName = firstName;
+        userToUpdate.lastName = lastName;
+        userToUpdate.age = age;
+        userToUpdate.email = email;
+        userToUpdate.gender = gender;
+        userToUpdate.skills = skills;
+        await userToUpdate.save();
+        res.send(userToUpdate)
+
+    }catch(err){
+        res.status(400).send(err);
+
+    }
+
+
+},)
 
 app.delete("/user/:id",async(req,res)=>{
     const id = req.params.id;
