@@ -30,12 +30,17 @@
 
 
         },
-        age:{
-
+        age: {
             type: Number,
-            validate(value){
-                if(!validator.isLength(value,2))throw new Error("Invalid age")
+            min: 10,
+            max: 100,
+            validate(value) {
+                if (value < 10 || value > 100) {
+                    throw new Error("Invalid age");
+                }
             }
+        
+        
 
         },
         gender: {
