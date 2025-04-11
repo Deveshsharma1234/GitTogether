@@ -14,8 +14,9 @@ app.use((req, res,next) => {
         try{
             const { token } = req.cookies;
             if (token) {
-                 jwt.verify(token, "secret@Key");
-                console.log("from middleware : ", token);
+             const decodedUser =     jwt.verify(token, "secret@Key");
+             req.user = decodedUser;
+                console.log("from middleware : ", decodedUser);
                 next();
             }else{
                 res.status(401).send("Unauthorized!! please login first!!")
@@ -88,17 +89,22 @@ app.post("/login", async (req, res) => {
 
 
 app.get("/getAllUser", async (req, res) => {
-    const cookies = req.cookies;
-    console.log(cookies);//undefined
+
     res.send(await User.find({}));
 })
 app.get("/getUserWithEmail", async (req, res) => {
 
     res.send(await User.find({ email: req.body.email }));
 })
+app.get("/getProfile",async(req,res)=>{
+    console.log("get USer req by id",req.user._id)
+   const user =  await User.findById(req.user._id).then(user => user.toObject());
+   delete user.password
+    res.send(user);
 
-app.patch("/user/:id", async (req, res) => {
-    const id = req.params.id;
+})
+app.patch("/user", async (req, res) => {
+    const id = req.user._id;
     const { firstName, lastName, age, email, gender, skills } = req.body;
     try {
         const userToUpdate = await User.findById(`${id}`);
@@ -119,8 +125,8 @@ app.patch("/user/:id", async (req, res) => {
 
 },)
 
-app.delete("/user/:id", async (req, res) => {
-    const id = req.params.id;
+app.delete("/user", async (req, res) => {
+    const id = req.user._id;
     const userToDelete = await User.findByIdAndDelete(id);
     res.send(userToDelete);
 
