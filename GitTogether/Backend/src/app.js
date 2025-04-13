@@ -7,32 +7,35 @@ const user = require('./models/user');
 const { validateSignUp } = require('./utils/validateSignUp');
 const crypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const { userAuth } = require('./middleware/auth');
 app.use(express.json());
 app.use(cookieParser());//added middleware to read the cookies!!
-app.use((req, res,next) => {
-    if(req.path != "/signup" && req.path != "/login"){
-        try{
-            const { token } = req.cookies;
-            if (token) {
-             const decodedUser =     jwt.verify(token, "secret@Key");
-             req.user = decodedUser;
-                console.log("from middleware : ", decodedUser);
-                next();
-            }else{
-                res.status(401).send("Unauthorized!! please login first!!")
-            }
+app.use(
+    // (req, res,next) => {
+    // if(req.path != "/signup" && req.path != "/login"){
+    //     try{
+    //         const { token } = req.cookies;
+    //         if (token) {
+    //          const decodedUser =     jwt.verify(token, "secret@Key");
+    //          req.user = decodedUser;
+    //             console.log("from middleware : ", decodedUser);
+    //             next();
+    //         }else{
+    //             res.status(401).send("Unauthorized!! please login first!!")
+    //         }
     
-        }catch(err){
-            res.status(401).send({err: err.message})
+    //     }catch(err){
+    //         res.status(401).send({err: err.message})
     
-        }
-    }else{
-        next();
-    }
-    
+    //     }
+    // }else{
+    //     next();
+    // }
+    userAuth   
    
    
-})
+// }
+)
 
 app.post("/signup", async (req, res) => {
     const { firstName, lastName, age, email, gender, skills,
@@ -97,10 +100,14 @@ app.get("/getUserWithEmail", async (req, res) => {
     res.send(await User.find({ email: req.body.email }));
 })
 app.get("/getProfile",async(req,res)=>{
-    console.log("get USer req by id",req.user._id)
-   const user =  await User.findById(req.user._id).then(user => user.toObject());
-   delete user.password
-    res.send(user);
+   try{
+    console.log("get USer req by id",req.user)
+     res.send(req.user);
+
+   }catch(err){
+    res.status(400).send({err:err.message})
+
+   }
 
 })
 app.patch("/user", async (req, res) => {
@@ -131,8 +138,12 @@ app.delete("/user", async (req, res) => {
     res.send(userToDelete);
 
 })
+app.post("/sendConnectonRq/:id",async (req,res)=>{
+    const sendConnectionTo =  await user.findById(req.params.id)
+    console.log(req.user.firstName +" Sends you conneton request to "+ sendConnectionTo.firstName);
+    res.send("Connection request sent to " + sendConnectionTo.firstName);
 
-
+})
 
 connectDB().then(
     () => {
