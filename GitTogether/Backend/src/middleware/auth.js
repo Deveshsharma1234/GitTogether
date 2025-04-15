@@ -36,8 +36,8 @@ const userAuth = async (req,res,next)=>{
          
         const {_id} = decodedUser;
             console.log("from middleware : ", decodedUser);
-            const localUser = await user.findById(_id).then(user =>user.toObject());
-            delete localUser.password;
+            const localUser = await user.findById(_id);
+            // delete localUser.password;
             req.user = localUser;
             console.log("from middleware : ", localUser);
             next();
