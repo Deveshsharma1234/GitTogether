@@ -12,16 +12,31 @@ userRouter.get("/getUserWithEmail", async (req, res) => {
     res.send(await User.find({ email: req.body.email }));
 })
 
-userRouter.get("/user/requests",async(req,res)=>{
-try {
-    const loggedInUser   =  req.user;
-  const pendingRequests = await connectionRequest.find({toUserId : loggedInUser._id , status : "interested"})
-  if(!pendingRequests || pendingRequests.length === 0) throw new Error("No pending requests");
-  res.send( pendingRequests)
-    
-} catch (error) {
-    res.status(400).send({err : error.message})}
+userRouter.get("/user/requests", async (req, res) => {
+    try {
+        const loggedInUser = req.user;
+        const pendingRequests = await connectionRequest.find({ toUserId: loggedInUser._id, status: "interested" }).populate("fromUserId", ["firstName", "lastName", "photoUrl", "gender", "age", "skills"])
+        if (!pendingRequests || pendingRequests.length === 0) throw new Error("No pending requests");
+        res.json({pendingRequests: pendingRequests})
 
+    } catch (error) {
+        res.status(400).send({ err: error.message })
+    }
+
+})
+
+userRouter.get("/user/connections", async (req, res) => {
+    try {
+        const loggedInUser = req.user;
+        const connections = await connectionRequest.find({ $or : [{fromUserId : loggedInUser._id,status: "accepted"},{toUserId : loggedInUser._id,status : "accepted"}]} ).populate("fromUserId",["firstName","lastName","photoUrl","gender","age","skills"]);
+        if (!connections) throw new Error("No Connections found");
+        const data = connections.map(row => row.fromUserId)
+        res.json({data : data});
+
+    } catch (err) {
+        res.status(400).send({ err: err.message })
+
+    }
 })
 
 module.exports = userRouter;
