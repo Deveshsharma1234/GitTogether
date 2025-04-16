@@ -1,6 +1,7 @@
 const express =  require('express');
 const User = require('../models/user');
 const ConnetonRequest = require('../models/connectionRequest');
+const e = require('express');
 const requestRouter = express.Router();
 //interested or ignored api..
     requestRouter.post("/request/send/:status/:toUserId",async (req,res)=>{
@@ -19,7 +20,7 @@ const requestRouter = express.Router();
             ]
            
            })
-           if(existingConnectionRequest) throw new Error("Connection request already sent");
+           if(existingConnectionRequest) throw new Error("Connection request already exist");
            const connectionRequest = new ConnetonRequest({
             fromUserId,
             toUserId,
@@ -28,7 +29,7 @@ const requestRouter = express.Router();
            })
          const data =   await connectionRequest.save();
          res.json({
-            message :"Connection request sent ",
+            message :status,
             data : data
          });
         }catch(err){
@@ -37,5 +38,23 @@ const requestRouter = express.Router();
           
     })
 
+    requestRouter.post("/request/review/:status/:reqId",async(req,res)=>{
+        //logged in user id should be toUserId and status should be interested
+
+       try {
+        if(req.params.status != "accepted" && req.params.status != "rejected")throw new Error({message:"Invalid status"});
+        const loggedInUser = req.user;
+        const {reqId,status} = req.params;
+        const connectionRequest  = await ConnetonRequest.findOne({_id : reqId, toUserId : loggedInUser._id,status : "interested"})
+        if(!connectionRequest) throw new Error("Connection request not found");
+        connectionRequest.status = status;
+      const updatedStatus =   await connectionRequest.save();
+      res.send( {message : "connection request " + status, data : updatedStatus});
+        
+       } catch (error) {
+        res.status(400).send({err : error.message})
+       }
+    
+    })
 
     module.exports = requestRouter;
