@@ -7,7 +7,8 @@ const authRouter = require('./routes/auth');
 const profileRouter = require('./routes/profile');
 const requestRouter = require('./routes/request');
 const userRouter = require('./routes/user');
-
+const cores = require('cors')
+app.use(cores())
 
 // Middlewares 
 app.use(express.json());

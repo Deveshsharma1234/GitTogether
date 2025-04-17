@@ -37,8 +37,8 @@ authRouter.post("/login", async (req, res) => {
         console.log(token);
         // res.cookie("role","admin");
         delete res.password;
-        res.send({
-            user
+        res.json({
+            user : user
         })
 
 
