@@ -14,10 +14,11 @@ const Register = () => {
     const genderRef = useRef();
     const skillsRef = useRef();
     const navigate = useNavigate();
+    const register = useRegister();
 
     const handleRegister = async ()=>{
     
-        const res =  await useRegister(firstNameRef,lastNameRef,emailRef,passwordRef,ageRef,genderRef,skillsRef);
+        const res =  await register(firstNameRef,lastNameRef,emailRef,passwordRef,ageRef,genderRef,skillsRef);
         if(res?.success ===true){
             toast.success("Registered successfully!", {
                 theme: "dark",

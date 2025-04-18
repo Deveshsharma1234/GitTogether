@@ -1,9 +1,10 @@
 import { toast } from "react-toastify";
 import { BASE_URL } from "../Utils/constants"
 import registerValidation from "../Utils/validation/registerValidation";
-const useRegister = async (...args) => {
+const useRegister =  () => {
 
 
+    const register = async(...args)=>{
       try {
             //here bcose of ...args a rest operator it collent in array not object so we have to desturctre it using []
             const [firstNameRef, lastNameRef, emailRef, passwordRef, ageRef, genderRef, skillsRef] = args;
@@ -69,6 +70,8 @@ const useRegister = async (...args) => {
             return { success: false, error: error.message };
       }
 
+    }
+    return register;
 
 
 

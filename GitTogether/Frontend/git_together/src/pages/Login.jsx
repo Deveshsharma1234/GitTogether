@@ -9,13 +9,14 @@ const Login = () => {
     const emailRef = useRef();
     const passwordRef = useRef();
     const navigate = useNavigate()
+    const login = useLogin();
     const localStorageEmail = localStorage.getItem("email");
     const localStoragePassword = localStorage.getItem("password");
 
   
 
-    const handleLogin = async () => {
-        useLogin(emailRef,passwordRef,navigate);
+    const handleLogin =  () => {
+        login(emailRef,passwordRef,navigate);
     }
     
 
