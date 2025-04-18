@@ -4,16 +4,20 @@ import { Link, useNavigate,  } from 'react-router';
 
 import { useRef } from 'react';
 import { ToastContainer } from 'react-toastify';
-import login from '../Hooks/login';
+import useLogin from '../Hooks/useLogin';
 const Login = () => {
     const emailRef = useRef();
     const passwordRef = useRef();
     const navigate = useNavigate()
+    const localStorageEmail = localStorage.getItem("email");
+    const localStoragePassword = localStorage.getItem("password");
+
   
 
     const handleLogin = async () => {
-        login(emailRef,passwordRef,navigate);
+        useLogin(emailRef,passwordRef,navigate);
     }
+    
 
     return (
     <>
@@ -39,6 +43,7 @@ const Login = () => {
                     <h2 className="text-left text-xl sm:text-2xl font-semibold text-purple-400">Login</h2>
 
                     <input
+                    defaultValue={localStorageEmail}
                         ref={emailRef}
                         type="email"
                         placeholder="Email"
@@ -46,6 +51,7 @@ const Login = () => {
                     />
 
                     <input
+                    defaultValue={localStoragePassword}
                         ref={passwordRef}
                         type="password"
                         placeholder="Password"

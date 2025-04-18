@@ -1,14 +1,34 @@
 import React from 'react';
 import { toast } from 'react-toastify';
 import { BASE_URL } from '../Utils/constants';
+import loginValidation from '../Utils/validation/loginValidation';
 
 
 
-const login =async (emailRef,passwordRef,navigate)=>{
+const useLogin =async (emailRef,passwordRef,navigate)=>{
 
        try {
         const email = emailRef.current?.value;
         const password = passwordRef.current?.value;
+
+        
+       const isValid =  loginValidation(email,password);
+       if(!isValid){
+        toast.error("Credentials are invalid",{
+            theme: "dark",
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            
+        })
+      
+        
+       }
+
+
         let loggedInUser = await fetch(BASE_URL + "/login", {
             method: "POST",
             headers: {
@@ -19,13 +39,11 @@ const login =async (emailRef,passwordRef,navigate)=>{
                 email,
                 password
             })
-
-
-
-
         })
      loggedInUser  =   await loggedInUser.json()
     if(loggedInUser.error === undefined){
+        localStorage.setItem("email",email)
+        localStorage.setItem("password",password)
         console.log(loggedInUser)
         console.log(loggedInUser?.user?.firstName)
         navigate("/home")
@@ -46,4 +64,4 @@ const login =async (emailRef,passwordRef,navigate)=>{
      }
 }
 
-export default login
+export default useLogin
