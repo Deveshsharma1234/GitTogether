@@ -5,21 +5,24 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user')
 const authRouter = express.Router();
 
-authRouter.post("/signup",async(req,res)=>{
-    const {firstName,lastName,age,email,gender,skills,password} = req.body;
-    try{
+authRouter.post("/signup", async (req, res) => {
+    const { firstName, lastName, age, email, gender, skils, password } = req.body;
+    try {
         validateSignUp(req);
-        const  hashedPassword = await crypt.hash(password,10);
+        const hashedPassword = await crypt.hash(password, 10);
         req.body.password = hashedPassword;
         const user = new User({
-            firstName,lastName,age,email,gender,skills,
-            password:hashedPassword
+            firstName, lastName, age, email, gender, skils,
+            password: hashedPassword
 
         });
-      const savedUser  =  await user.save();
-        res.send("User created successfully" +savedUser )
-    }catch(err){
-        res.status(400).send({error : err.message})
+        const savedUser = await user.save();
+        res.json({
+            message: "User Created Succesfull",
+            savedUser: savedUser
+        })
+    } catch (err) {
+        res.status(400).json({ message: err.message })
     }
 }
 )
@@ -33,12 +36,18 @@ authRouter.post("/login", async (req, res) => {
         const isPasswordCorrect = await crypt.compare(password, user.password);
         if (!isPasswordCorrect) throw new Error("Invalid password");
         const token = await jwt.sign({ _id: user._id }, "secret@Key", { expiresIn: "1h" })
-        res.cookie("token", token);
+        res.cookie("token", token, {
+            httpOnly: true,
+            secure: false, // set true in production with HTTPS
+            sameSite: "lax", // "none" if cross-origin & secure
+            path: "/", // important to match logout clearCookie
+            maxAge: 60 * 60 * 1000 // 1 hour in ms (optional)
+        });
         console.log(token);
         // res.cookie("role","admin");
         delete res.password;
         res.json({
-            user : user
+            user: user
         })
 
 
@@ -49,12 +58,20 @@ authRouter.post("/login", async (req, res) => {
 
 })
 
-authRouter.post("/logout",(req,res)=>{
-    res.clearCookie("token");
-    res.send("LogOut succesful..")
-    
-    
-    
-})
+authRouter.post("/logout", (req, res) => {
+    res.clearCookie("token", {
+        httpOnly: true,
+        secure: false, // 🔐 Set to true in production (with HTTPS)
+        sameSite: "lax", // or "none" only if cross-site & over HTTPS
+        path: "/" // ✅ VERY important to match cookie path
+    });
 
-module.exports =    authRouter
+    console.log("Cookies cleared");
+
+    res.status(200).json({
+        ok: true,
+        message: "Logged out successfully"
+    });
+});
+
+module.exports = authRouter

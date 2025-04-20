@@ -28,7 +28,8 @@ const user = require('../models/user');
 // }
 
 const userAuth = async (req,res,next)=>{
-    if(req.path != "/signup" && req.path != "/login"){
+    console.log("Cookies in request: ", req.cookies); // 🔍 Log cookies here
+    if(req.path != "/signup" && req.path != "/login"  ){
     try{
         const { token } = req.cookies;
         if (token) {

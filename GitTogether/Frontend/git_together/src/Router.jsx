@@ -3,7 +3,8 @@ import React from "react";
 import App from "./App";
 import Login from "../src/pages/Login";
 import Register from "./pages/Register";
-import Navbar from "./components/Navbar";
+
+import Home from "./pages/Home";
 
 
 
@@ -23,7 +24,7 @@ const appRouter = createBrowserRouter([
         },
         {
             path : "/home",
-            element : <Navbar/>
+            element : <Home/>
         }
        ]
     }

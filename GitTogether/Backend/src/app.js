@@ -7,9 +7,11 @@ const authRouter = require('./routes/auth');
 const profileRouter = require('./routes/profile');
 const requestRouter = require('./routes/request');
 const userRouter = require('./routes/user');
-const cores = require('cors')
-app.use(cores())
-
+const cors = require('cors')
+app.use(cors({
+    origin: 'http://localhost:3001', // explicitly allow your frontend origin
+    credentials: true,               // allow cookies to be sent
+  }));
 // Middlewares 
 app.use(express.json());
 app.use(cookieParser());//added middleware to read the cookies!!

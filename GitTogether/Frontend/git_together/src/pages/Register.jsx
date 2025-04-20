@@ -45,7 +45,7 @@ const Register = () => {
         <>
         <ToastContainer/>
             <div
-                className="flex items-center justify-center min-h-screen bg-cover bg-center bg-no-repeat px-4"
+                className="flex items-center justify-center min-h-screen bg-cover bg-center bg-no-repeat px-4 glass"
                 style={{ backgroundImage: `url(${earthImg})` }}
             >
              <div className='bg-opacity-10 backdrop-blur-3xl shadow-lg w-full max-w-md sm:max-w-sm md:max-w-lg lg:max-w-md xl:max-w-md flex flex-col items-center text-white rounded-2xl'>
