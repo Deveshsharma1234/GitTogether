@@ -1,17 +1,23 @@
 import React from 'react';
 import earthImg from "../assets/earth.png"
-import { Link, useNavigate,  } from 'react-router';
+import { Link, Navigate, useNavigate,  } from 'react-router';
 
 import { useRef } from 'react';
 import { ToastContainer } from 'react-toastify';
 import useLogin from '../Hooks/useLogin';
+import { useSelector } from 'react-redux';
 const Login = () => {
+    const isLoggedIn = useSelector(store => store.user.isLoggedIn)
+    if(isLoggedIn){
+        return <Navigate to={"/home"} />
+    }
     const emailRef = useRef();
     const passwordRef = useRef();
     const navigate = useNavigate()
     const login = useLogin();
     const localStorageEmail = localStorage.getItem("email");
     const localStoragePassword = localStorage.getItem("password");
+
 
   
 
