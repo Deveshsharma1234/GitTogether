@@ -6,13 +6,13 @@ const User = require('../models/user')
 const authRouter = express.Router();
 
 authRouter.post("/signup", async (req, res) => {
-    const { firstName, lastName, age, email, gender, skils, password } = req.body;
+    const { firstName, lastName, age, email, gender, skils, password,photoUrl } = req.body;
     try {
         validateSignUp(req);
         const hashedPassword = await crypt.hash(password, 10);
         req.body.password = hashedPassword;
         const user = new User({
-            firstName, lastName, age, email, gender, skils,
+            firstName, lastName, age, email, gender, skils,photoUrl,
             password: hashedPassword
 
         });
@@ -52,7 +52,7 @@ authRouter.post("/login", async (req, res) => {
 
 
     } catch (err) {
-        res.status(400).send({ error: err.message });
+        res.status(400).json({ error: err.message });
     }
 
 

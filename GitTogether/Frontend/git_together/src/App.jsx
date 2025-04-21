@@ -11,9 +11,11 @@ function App() {
 
   return (
     <>
+   <div className="">
    { isLoggedIn&&<Navbar/>}
     <Outlet/>
      {isLoggedIn&&<Footer/>}
+   </div>
     </>
   )
 }

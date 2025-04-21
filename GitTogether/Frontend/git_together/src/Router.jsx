@@ -5,6 +5,8 @@ import Login from "../src/pages/Login";
 import Register from "./pages/Register";
 import UserProtectedRoute from "../src/components/UserProtectedRoute"
 import Home from "./pages/Home";
+import EditProfile from "./pages/EditProfile";
+import Profile from "./pages/Profile";
 
 
 
@@ -25,6 +27,15 @@ const appRouter = createBrowserRouter([
         {
             path : "/home",
             element : <UserProtectedRoute Element ={Home}/>
+        },
+        {
+            path : "/profile",
+            element : <UserProtectedRoute Element ={Profile}/>
+
+        },
+        {
+            path :"/editProfile",
+            element : <UserProtectedRoute Element ={EditProfile}/>
         }
        ]
     }

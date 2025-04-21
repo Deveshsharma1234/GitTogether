@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import { removeUser } from '../Redux/Slice/userSlice';
 import { BASE_URL } from '../Utils/constants';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 
 const useLogout =  ()=>{
     const dispatch = useDispatch();

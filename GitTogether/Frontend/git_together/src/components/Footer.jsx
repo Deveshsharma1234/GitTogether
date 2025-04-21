@@ -2,7 +2,7 @@ import React from 'react';
 
 const Footer = () => {
   return (
-    <footer className="bg-neutral text-neutral-content px-6 py-4 fixed bottom-0 w-full z-50">
+    <footer className="bg-neutral text-neutral-content px-6 py-4    w-full  bottom-0  z-50">
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
         <aside className="flex items-center gap-2">
           <svg

@@ -43,11 +43,11 @@ const userAuth = async (req,res,next)=>{
             console.log("from middleware : ", localUser);
             next();
         }else{
-            res.status(401).send("Unauthorized!! please login first!!")
+            res.status(401).json({message : "Unauthorized!! please login first!!"})
         }
 
     }catch(err){
-        res.status(401).send({err: err.message})
+        res.status(400).send({err: err.message})
 
     }
 }else{

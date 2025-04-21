@@ -52,7 +52,7 @@ userRouter.get("/user/feed",async(req,res)=>{
         const loggedInUser = req.user;
         //people i dont want in my feed
         const page =parseInt( req.query.page) || 1;
-        let limit = parseInt(req.query.limit )|| 3;
+        let limit = parseInt(req.query.limit );
         limit = limit>50 ? 50: limit;
         const skip = (page-1)*limit
         const connections = await connectionRequest.find({ $or:[{fromUserId : loggedInUser._id},{toUserId : loggedInUser._id}]}).select("fromUserId toUserId")
@@ -68,13 +68,13 @@ userRouter.get("/user/feed",async(req,res)=>{
         $and :[{ _id : {$nin : Array.from(hideUserFromFeed)}},{_id : {$ne : loggedInUser._id}}]
        
        
-       }).select("firstName lastName photoUrl gender age skills").skip(skip).limit(limit)
-       res.send(user);
+       }).select("firstName lastName photoUrl gender age skils disc").skip(skip).limit(limit)
+       res.json({user : user});
 
 
 
     } catch (error) {
-        res.status(400).send({err: error.message})
+        res.status(400).json({err: error.message})
     }
 })
 

@@ -4,7 +4,7 @@ import { useRef } from 'react';
 import { toast } from 'react-toastify';
 import useRegister from '../Hooks/useRegister';
 import { ToastContainer } from 'react-toastify';
-import {Link, Navigate, useNavigate} from 'react-router'
+import {Link, Navigate, useNavigate} from 'react-router-dom'
 import { useSelector } from 'react-redux';
 const Register = () => {
   const isLoggedIn = useSelector(store => store.user.isLoggedIn)
