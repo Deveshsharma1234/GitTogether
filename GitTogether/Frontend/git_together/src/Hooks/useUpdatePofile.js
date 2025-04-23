@@ -5,7 +5,7 @@ import { BASE_URL } from '../Utils/constants';
 import { useNavigate } from 'react-router-dom';
 
 const UseUpdatePofile = (
-    firstNameRef, lastNameRef, emailRef, discriptionRef, ageRef, genderRef, skillsRef
+    firstNameRef, lastNameRef, emailRef, discriptionRef, ageRef, genderRef, skilsRef,photoUrlRef
 ) => {
     const isSubmitting = useRef(false);
     const navigate = useNavigate();
@@ -29,7 +29,8 @@ const UseUpdatePofile = (
                     disc: discriptionRef.current.value,
                     age: ageRef.current.value,
                     gender: genderRef.current.value,
-                    skils: skillsRef.current.value
+                    skils: skilsRef.current.vlaue,
+                    photoUrl: photoUrlRef.current.value
                 })
             })
             const data = await res.json();

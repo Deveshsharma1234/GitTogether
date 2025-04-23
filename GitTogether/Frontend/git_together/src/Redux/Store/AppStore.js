@@ -1,11 +1,13 @@
 
 import { configureStore } from '@reduxjs/toolkit';
 import userReducer from "../Slice/userSlice"
+import connectionRequestReducer from "../Slice/connectionSlice"
 
 const AppStore = configureStore({
     reducer:{
 
-        "user": userReducer
+        "user": userReducer,
+        "connectionRequests": connectionRequestReducer
     }
 
 })

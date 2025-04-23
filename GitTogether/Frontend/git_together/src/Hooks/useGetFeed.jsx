@@ -39,7 +39,7 @@ const UseGetFeed = () => {
             getFeed();
         
         },[])
-        return feed;
+        return [feed,setFeed];
     }
 
 

@@ -7,7 +7,7 @@ const useRegister =  () => {
     const register = async(...args)=>{
       try {
             //here bcose of ...args a rest operator it collent in array not object so we have to desturctre it using []
-            const [firstNameRef, lastNameRef, emailRef, passwordRef, ageRef, genderRef, skillsRef] = args;
+            const [firstNameRef, lastNameRef, emailRef, passwordRef, ageRef, genderRef, skillsRef,photoUrlRef] = args;
             const firstName = firstNameRef.current?.value;
             const lastName = lastNameRef.current?.value;
             const email = emailRef.current?.value;
@@ -15,6 +15,8 @@ const useRegister =  () => {
             const age = ageRef.current?.value;
             const gender = genderRef.current?.value;
             const skills = skillsRef.current?.value;
+            const photoUrl = photoUrlRef.current?.value;
+
             const isRegisterValid = registerValidation(firstName, lastName, email, password, age, gender, skills)
 
             if (isRegisterValid.isValid) {
@@ -32,7 +34,8 @@ const useRegister =  () => {
                               password,
                               age,
                               gender,
-                              skils
+                              skils,
+                              photoUrl
 
                         })
                   })

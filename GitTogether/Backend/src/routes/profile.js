@@ -15,7 +15,7 @@ profileRouter.get("/profile", async (req, res) => {
 
 profileRouter.patch("/profile/update", async (req, res) => {
     const id = req.user._id;
-    const { firstName, lastName, age, email, gender, skils, disc } = req.body;
+    const { firstName, lastName, age, email, gender, skils, disc,photoUrl } = req.body;
     try {
         const userToUpdate = await User.findById(`${id}`);
         userToUpdate.firstName = firstName;
@@ -25,6 +25,7 @@ profileRouter.patch("/profile/update", async (req, res) => {
         userToUpdate.gender = gender;
         userToUpdate.skils = skils;
         userToUpdate.disc = disc;
+        userToUpdate.photoUrl = photoUrl;
         await userToUpdate.save();
         res.send(userToUpdate)
 

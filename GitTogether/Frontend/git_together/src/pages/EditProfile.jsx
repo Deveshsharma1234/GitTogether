@@ -18,11 +18,13 @@ const EditProfile = () => {
     const discriptionRef = useRef();
     const ageRef = useRef();
     const genderRef = useRef();
-    const skillsRef = useRef();
+    const skilsRef = useRef();
+    const photoUrlRef = useRef();
+
     const user = useSelector(store => store.user.user)
     
 
-   const handleUpdate = UseUpdatePofile(firstNameRef,lastNameRef,emailRef,discriptionRef,ageRef,genderRef,skillsRef);
+   const handleUpdate = UseUpdatePofile(firstNameRef,lastNameRef,emailRef,discriptionRef,ageRef,genderRef,skilsRef,photoUrlRef);
 //    handleUpdate(loading,setLoading);
 
     return (
@@ -61,6 +63,10 @@ const EditProfile = () => {
                             <label className="font-semibold">Age :</label>
                             <input defaultValue={user.age} ref={ageRef} type="number" placeholder='Age' className="px-4 py-2 rounded-lg bg-white bg-opacity-20 text-black placeholder-gray-300 focus:outline-none" />
                         </div>
+                        <div className="flex flex-col">
+                            <label className="font-semibold">Image url :</label>
+                            <input defaultValue={user.photoUrl} ref={photoUrlRef} type="url" placeholder='photo Url' className="px-4 py-2 rounded-lg bg-white bg-opacity-20 text-black placeholder-gray-300 focus:outline-none" />
+                        </div>
 
                         <div className="flex flex-col">
                             <label className="font-semibold">Gender :</label>
@@ -76,7 +82,7 @@ const EditProfile = () => {
                             <label className="font-semibold">Skills :</label>
                             <input
                                 defaultValue={user.skils}
-                                ref={skillsRef}
+                                ref={skilsRef}
                                 type="text"
                                 name="skils"
                                 placeholder="Enter skills (comma-separated)"

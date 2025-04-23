@@ -18,12 +18,13 @@ const Register = () => {
     const ageRef = useRef();
     const genderRef = useRef();
     const skillsRef = useRef();
+    const photoUrlRef = useRef();
     const navigate = useNavigate();
     const register = useRegister();
 
     const handleRegister = async ()=>{
     
-        const res =  await register(firstNameRef,lastNameRef,emailRef,passwordRef,ageRef,genderRef,skillsRef);
+        const res =  await register(firstNameRef,lastNameRef,emailRef,passwordRef,ageRef,genderRef,skillsRef,photoUrlRef);
         if(res?.success ===true){
             toast.success("Registered successfully!", {
                 theme: "dark",
@@ -81,6 +82,10 @@ const Register = () => {
     <div className="flex flex-col">
       <label className="font-semibold">Age :</label>
       <input ref={ageRef} type="number" placeholder='Age' className="px-4 py-2 rounded-lg bg-white bg-opacity-20 text-black placeholder-gray-300 focus:outline-none" />
+    </div>
+    <div className="flex flex-col">
+      <label className="font-semibold">Image url :</label>
+      <input ref={photoUrlRef} type="url" placeholder='Image Url' className="px-4 py-2 rounded-lg bg-white bg-opacity-20 text-black placeholder-gray-300 focus:outline-none" />
     </div>
 
     <div className="flex flex-col">

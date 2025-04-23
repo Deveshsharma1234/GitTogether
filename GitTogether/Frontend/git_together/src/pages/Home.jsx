@@ -6,7 +6,7 @@ import FeedCard from '../components/FeedCard';
 
 const Home = () => {
 
-  const feed = UseGetFeed();
+  const [feed] = UseGetFeed();
   
 
 

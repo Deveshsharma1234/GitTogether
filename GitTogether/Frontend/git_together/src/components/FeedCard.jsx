@@ -1,6 +1,8 @@
 import React from 'react';
+import useHandleRequest from '../Hooks/useHandleRequest';
 
 const FeedCard = (props) => {
+    const handleRequest = useHandleRequest();
     const {_id,firstName,lastName,gender,age,photoUrl,disc} = props;
     console.log(_id,firstName,lastName,gender,age,photoUrl,disc);
     const DUMMU_URL = "https://cdn.pixabay.com/photo/2021/08/11/11/15/man-6538205_1280.jpg";
@@ -25,8 +27,12 @@ const FeedCard = (props) => {
                 <p className="text-sm text-gray-300">{age} years | {gender}</p>
                 <p className="italic text-gray-100 line-clamp-1">{disc}</p>
                 <div className="card-actions mt-4 flex gap-4">
-                    <button className="btn btn-secondary  hover:scale-105">Ignore</button>
-                    <button className="btn  btn-primary hover:scale-105">Interested</button>
+                    <button onClick={()=>{
+                        handleRequest("ignore",_id)
+                    }} className="btn btn-secondary  hover:scale-105">Ignore</button>
+                    <button onClick={()=>{
+                        handleRequest("interested",_id)
+                    }} className="btn  btn-primary hover:scale-105">Interested</button>
                 </div>
             </div>
         </div>

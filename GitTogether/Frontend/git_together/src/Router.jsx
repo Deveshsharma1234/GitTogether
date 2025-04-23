@@ -7,9 +7,7 @@ import UserProtectedRoute from "../src/components/UserProtectedRoute"
 import Home from "./pages/Home";
 import EditProfile from "./pages/EditProfile";
 import Profile from "./pages/Profile";
-
-
-
+import FriendRequest from "./pages/FriendRequest";
 
 const appRouter = createBrowserRouter([
     {
@@ -36,6 +34,10 @@ const appRouter = createBrowserRouter([
         {
             path :"/editProfile",
             element : <UserProtectedRoute Element ={EditProfile}/>
+        },
+        {
+            path: "/friendRequest",
+            element: <UserProtectedRoute Element ={FriendRequest}/>
         }
        ]
     }

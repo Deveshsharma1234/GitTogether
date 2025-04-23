@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-
+import friendRequest from '../assets/friendRequest.png'
 import {  ToastContainer } from 'react-toastify';
 import useLogout from '../Hooks/useLogout';
 import Modal from './Modal';
@@ -25,7 +25,7 @@ const Navbar = () => {
         <Link to={"/home"} className="btn btn-ghost text-xl">🔗GitTogether</Link>
       </div>
       <div className="flex gap-2">
-        <input type="text" placeholder="Search" className="input input-bordered w-24 md:w-auto" />
+     <Link to={"/friendRequest"}> <img src={friendRequest} alt="" className='h-10 w-10 mx-10 hover:cursor-pointer hover:animate-bounce hover:scale-3d ' /></Link>
         <div className="dropdown dropdown-end">
           <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
             <div className="w-10 rounded-full">
