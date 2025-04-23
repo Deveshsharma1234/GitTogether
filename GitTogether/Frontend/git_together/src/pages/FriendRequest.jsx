@@ -4,14 +4,14 @@ import { ToastContainer } from 'react-toastify';
 import { useDispatch } from 'react-redux'
 import { connectionRequest } from '../Redux/Slice/connectionSlice';
 import { useSelector } from 'react-redux';
-
+import useReviewReq from '../Hooks/useReviewReq';
 
 
 const FriendRequest = () => {
     const dispatch = useDispatch();
     const connections = useSelector(store => store.connectionRequests?.pendingRequests)
     console.log("from frined req", connections);
-
+    const handleReplyReq = useReviewReq();
 
     const getConnection = useGetConnectionRequests();
     useEffect(() => {
@@ -25,6 +25,8 @@ const FriendRequest = () => {
         fetchConnections();
 
     }, [])
+
+    
     return (
         <div className="p-6 bg-base-200 min-h-screen">
         <ToastContainer />
@@ -35,7 +37,7 @@ const FriendRequest = () => {
         ) : (
           connections?.map((connection, index) => {
             const { firstName, lastName, photoUrl, gender } = connection?.fromUserId || {};
-            const { status } = connection;
+            const { status ,_id} = connection;
       
             return (
               <div key={index} className="card card-side bg-base-100 shadow-xl mb-4">
@@ -51,8 +53,12 @@ const FriendRequest = () => {
                   <p className="text-sm capitalize text-gray-500">Gender: {gender}</p>
                   <p className="text-sm text-accent">Status: {status}</p>
                   <div className="card-actions justify-end">
-                    <button className="btn btn-success btn-sm">Accept</button>
-                    <button className="btn btn-error btn-sm">Reject</button>
+                    <button className="btn btn-success btn-sm" onClick={()=>{
+                      handleReplyReq("accepted",_id)
+                    }}>Accept</button>
+                    <button className="btn btn-error btn-sm" onClick={()=>{
+                      handleReplyReq("rejected",_id)
+                    }}>Reject</button>
                   </div>
                 </div>
               </div>
