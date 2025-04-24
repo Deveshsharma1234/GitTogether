@@ -1,8 +1,11 @@
 
 import { useEffect, useState } from 'react';
 import { BASE_URL } from '../Utils/constants';
-
+import {useDispatch} from 'react-redux'
+import { addFeed } from '../Redux/Slice/feedSlice';
 const UseGetFeed = () => {
+    const dispatch = useDispatch();
+
     const [feed,setFeed] = useState([]);
     console.log( "from usegetFeed state variable" , feed)
       useEffect(()=>{
@@ -25,6 +28,7 @@ const UseGetFeed = () => {
                     const data = await res.json();
                     console.log(data);
                     setFeed(data.user)
+                    dispatch(addFeed(data.user))
                     
                 } catch (error) {
                     console.log(error);

@@ -52,8 +52,8 @@ userRouter.get("/user/feed",async(req,res)=>{
         const loggedInUser = req.user;
         //people i dont want in my feed
         const page =parseInt( req.query.page) || 1;
-        let limit = parseInt(req.query.limit );
-        limit = limit>50 ? 50: limit;
+        let limit = parseInt(req.query.limit )||5;
+        limit = limit>5 ? 5: limit;
         const skip = (page-1)*limit
         const connections = await connectionRequest.find({ $or:[{fromUserId : loggedInUser._id},{toUserId : loggedInUser._id}]}).select("fromUserId toUserId")
         // res.json({connections : connections})

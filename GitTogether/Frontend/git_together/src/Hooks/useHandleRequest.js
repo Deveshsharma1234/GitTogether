@@ -1,7 +1,12 @@
 import {toast} from 'react-toastify'
 import {BASE_URL} from '../Utils/constants'
 import {useNavigate} from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
+import { removeFeed } from '../Redux/Slice/feedSlice'
 const useHandleRequest =()=>{
+    const feed = useSelector(store => store.feed)
+    const dispath = useDispatch();
     const navigate = useNavigate();
 
   
@@ -43,9 +48,11 @@ const useHandleRequest =()=>{
     
                   
                 })
-                setTimeout(() => {
-                  location.reload();
-                }, 3000);
+
+                dispath(removeFeed(toUserId))
+                // setTimeout(() => {
+                //   location.reload();
+                // }, 3000);
            
             }
 
