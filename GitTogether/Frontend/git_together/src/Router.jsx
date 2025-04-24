@@ -8,6 +8,7 @@ import Home from "./pages/Home";
 import EditProfile from "./pages/EditProfile";
 import Profile from "./pages/Profile";
 import FriendRequest from "./pages/FriendRequest";
+import Friends from "./pages/Friends";
 
 const appRouter = createBrowserRouter([
     {
@@ -38,6 +39,10 @@ const appRouter = createBrowserRouter([
         {
             path: "/friendRequest",
             element: <UserProtectedRoute Element ={FriendRequest}/>
+        },
+        {
+            path: "/connections",
+            element : <UserProtectedRoute Element ={Friends}/>
         }
        ]
     }

@@ -26,13 +26,13 @@ const FriendRequest = () => {
 
     }, [])
 
-    
+    // if(!connections) return <>No Connections</>;
     return (
         <div className="p-6 bg-base-200 min-h-screen">
         <ToastContainer />
         <h1 className="text-3xl font-bold mb-6">Friend Requests</h1>
       
-        {connections?.length === 0 ? (
+        {connections?.length === 0  ? (
           <h2 className="text-xl text-center">No Connections</h2>
         ) : (
           connections?.map((connection, index) => {

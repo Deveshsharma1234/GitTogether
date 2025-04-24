@@ -28,13 +28,13 @@ userRouter.get("/user/requests", async (req, res) => {
 userRouter.get("/user/connections", async (req, res) => {
     try {
         const loggedInUser = req.user;
-        const connections = await connectionRequest.find({ $or : [{fromUserId : loggedInUser._id,status: "accepted"},{toUserId : loggedInUser._id,status : "accepted"}]} ).populate("fromUserId",["firstName","lastName","photoUrl","gender","age","skills"]);
+        const connections = await connectionRequest.find({ $or : [{fromUserId : loggedInUser._id,status: "accepted"},{toUserId : loggedInUser._id,status : "accepted"}]} ).populate("fromUserId",["firstName","lastName","photoUrl","gender","age","skills"]).populate("toUserId",["firstName","lastName","photoUrl","gender","age","skills"])
         if (!connections) throw new Error("No Connections found");
         const data = connections.map(row =>{
             if(row.toUserId===loggedInUser._id){
-                return row.fromUserId;
+                return row;
             }else{
-                return row.toUserId;
+                return row ;
             }
         })
         res.json({data : data});
