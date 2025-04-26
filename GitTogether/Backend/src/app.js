@@ -9,7 +9,7 @@ const requestRouter = require('./routes/request');
 const userRouter = require('./routes/user');
 const cors = require('cors')
 app.use(cors({
-    origin: 'http://localhost:3001', // explicitly allow your frontend origin
+    origin:['http://localhost:3001', 'http://13.60.253.225'], // explicitly allow your frontend origin
     credentials: true,               // allow cookies to be sent
   }));
 // Middlewares 
