@@ -33,7 +33,7 @@ const userAuth = async (req,res,next)=>{
     try{
         const { token } = req.cookies;
         if (token) {
-         const decodedUser =     jwt.verify(token, "secret@Key");
+         const decodedUser =     jwt.verify(token, process.env.JWT_SECRET_KEY);
          
         const {_id} = decodedUser;
             console.log("from middleware : ", decodedUser);
