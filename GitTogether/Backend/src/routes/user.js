@@ -28,22 +28,40 @@ userRouter.get("/user/requests", async (req, res) => {
 userRouter.get("/user/connections", async (req, res) => {
     try {
         const loggedInUser = req.user;
-        const connections = await connectionRequest.find({ $or : [{fromUserId : loggedInUser._id,status: "accepted"},{toUserId : loggedInUser._id,status : "accepted"}]} ).populate("fromUserId",["firstName","lastName","photoUrl","gender","age","skills"]).populate("toUserId",["firstName","lastName","photoUrl","gender","age","skills"])
-        if (!connections) throw new Error("No Connections found");
-        const data = connections.map(row =>{
-            if(row.toUserId===loggedInUser._id){
-                return row;
-            }else{
-                return row ;
-            }
+
+        const connections = await connectionRequest.find({
+            $or: [
+                { fromUserId: loggedInUser._id, status: "accepted" },
+                { toUserId: loggedInUser._id, status: "accepted" }
+            ]
         })
-        res.json({data : data});
+        .populate("fromUserId", ["firstName", "lastName", "photoUrl", "gender", "age", "skills"])
+        .populate("toUserId", ["firstName", "lastName", "photoUrl", "gender", "age", "skills"]);
+
+        if (!connections.length) throw new Error("No connections found");
+
+        const data = connections.map(row => {
+            const from = row.fromUserId;
+            const to = row.toUserId;
+            const isSender = from._id?.toString?.() === loggedInUser._id.toString();
+            const friend = isSender ? to : from;
+        
+            return {
+                _id: row._id,
+                friend,
+                status: row.status,
+                createdAt: row.createdAt,
+                updatedAt: row.updatedAt
+            };
+        });
+        
+
+        res.json({ data });
 
     } catch (err) {
-        res.status(400).send({ err: err.message })
-
+        res.status(400).send({ err: err.message });
     }
-})
+});
 
 
 userRouter.get("/user/feed",async(req,res)=>{
